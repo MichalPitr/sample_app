@@ -22,6 +22,8 @@ end
 
 group :development do
   gem "web-console", "4.2.0"
+  gem "solargraph"
+  gem "erb_lint"
 end
 
 group :test do
