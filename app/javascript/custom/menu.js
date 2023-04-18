@@ -1,7 +1,7 @@
 
 let addToggleListener = (selected_id, menu_id, toggle_class) => {
     let selected_element = document.querySelector(`#${selected_id}`);
-    selected_element.addEventListener("click", (event) => {
+    selected_element?.addEventListener("click", (event) => {
         event.preventDefault();
         let menu = document.querySelector(`#${menu_id}`);
         menu.classList.toggle(toggle_class);

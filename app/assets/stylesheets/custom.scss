@@ -206,6 +206,19 @@ input {
     }
 }
 
+.checkbox {
+    margin: -10px 0 10px 0;
+    span {
+        margin-left: 20px;
+        font-weight: normal;
+    }
+}
+
+#session_remember_me {
+    width: auto;
+    margin-left: 0;
+}
+
 .dropdown-menu.active {
     display: block;
 }

@@ -4,6 +4,10 @@ class UsersLogin < ActionDispatch::IntegrationTest
   def setup
     @user = users(:michael)
   end
+
+  test "authenticated? should return false for user with nil digest" do
+    assert_not @user.authenticated?('')
+  end
 end
 
 class InvalidPasswordTest < UsersLogin
@@ -60,8 +64,28 @@ class Logout < ValidLogin
 
   test "redirected after logout" do
     follow_redirect!
+    assert_template "static_pages/home"
     assert_select "a[href=?]", login_path
     assert_select "a[href=?]", logout_path, count: 0
     assert_select "a[href=?]", user_path(@user), count: 0
+  end
+
+  test "should still work after logout in another window" do
+    delete logout_path
+    assert_redirected_to root_url
+  end
+end
+
+class RememberingTest < UsersLogin
+  test "login with remembering" do
+    log_in_as(@user, remember_me: '1')
+    assert_equal cookies[:remember_token], assigns(:user).remember_token
+  end
+
+  test "login without remembering" do
+    log_in_as(@user, remember_me: '1')
+    # Re-log in to make sure logging in without remember removes the token
+    log_in_as(@user, remember_me: '0')
+    assert cookies[:remember_token].blank?
   end
 end
