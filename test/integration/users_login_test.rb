@@ -70,19 +70,19 @@ class Logout < ValidLogin
     assert_select "a[href=?]", user_path(@user), count: 0
   end
 
-  test "should still work after logout in another window" do
+  test 'should still work after logout in another window' do
     delete logout_path
     assert_redirected_to root_url
   end
 end
 
 class RememberingTest < UsersLogin
-  test "login with remembering" do
+  test 'login with remembering' do
     log_in_as(@user, remember_me: '1')
     assert_equal cookies[:remember_token], assigns(:user).remember_token
   end
 
-  test "login without remembering" do
+  test 'login without remembering' do
     log_in_as(@user, remember_me: '1')
     # Re-log in to make sure logging in without remember removes the token
     log_in_as(@user, remember_me: '0')

@@ -1,0 +1,10 @@
+<%= provide(:title, 'All users') %>
+
+<h1>All users</h1>
+
+<%= will_paginate %>
+<ul class="users">
+    <%# @users is a list of User objects, render can accept a list and render it for each object! %>
+    <%= render @users %>
+</ul>
+<%= will_paginate %>
