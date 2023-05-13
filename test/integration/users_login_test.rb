@@ -4,10 +4,6 @@ class UsersLogin < ActionDispatch::IntegrationTest
   def setup
     @user = users(:michael)
   end
-
-  test "authenticated? should return false for user with nil digest" do
-    assert_not @user.authenticated?('')
-  end
 end
 
 class InvalidPasswordTest < UsersLogin
@@ -77,6 +73,10 @@ class Logout < ValidLogin
 end
 
 class RememberingTest < UsersLogin
+  test 'authenticated? should return false for user with nil digest' do
+    assert_not @user.authenticated?(:remember, '')
+  end
+
   test 'login with remembering' do
     log_in_as(@user, remember_me: '1')
     assert_equal cookies[:remember_token], assigns(:user).remember_token
