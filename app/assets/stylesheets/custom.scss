@@ -117,9 +117,11 @@ footer {
             float: none;
             margin-bottom: 1em;
         }
+
         ul {
             float: none;
             padding: 0;
+
             li {
                 float: none;
                 margin-left: 0;
@@ -193,6 +195,7 @@ input {
 
 #error_explanation {
     color: red;
+
     ul {
         color: red;
         margin: 0 0 30px 0;
@@ -201,6 +204,7 @@ input {
 
 .field_with_errors {
     @extend .has-error;
+
     .form-control {
         color: $state-danger-text;
     }
@@ -208,6 +212,7 @@ input {
 
 .checkbox {
     margin: -10px 0 10px 0;
+
     span {
         margin-left: 20px;
         font-weight: normal;
@@ -229,6 +234,7 @@ input {
 .users {
     list-style: none;
     margin: 0;
+
     li {
         overflow: auto;
         padding: 10px 0;
@@ -237,5 +243,55 @@ input {
 }
 
 
+/* microposts */
+.microposts {
+    list-style: none;
+    padding: 0;
 
+    li {
+        padding: 10px 0;
+        border-top: 1px solid #e8e8e8;
+    }
 
+    .user {
+        margin-top: 5em;
+        padding-top: 0;
+    }
+
+    .content {
+        display: block;
+        margin-left: 60px;
+
+        img {
+            display: block;
+            padding: 5px 0;
+        }
+    }
+
+    .timestamp {
+        color: $gray-light;
+        display: block;
+        margin-left: 60px;
+    }
+
+    .gravatar {
+        float: left;
+        margin-right: 10px;
+        margin-top: 5px;
+    }
+}
+
+aside {
+    textarea {
+        height: 100px;
+        margin-bottom: 5px;
+    }
+}
+
+span.image {
+    margin-top: 10px;
+
+    input {
+        border: 0;
+    }
+}
