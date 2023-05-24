@@ -6,7 +6,7 @@
         <%#  Using a symbol in scope instead of an instance variable allows to tie a form to an action without
          a corresponding model. In this case, password reset is not a model, so we use a symbol instead! %>
         <%= form_with(model: @user, url: password_reset_path(params[:id])) do |f| %>
-            <%= render 'shared/error_messages' %>
+            <%= render 'shared/error_messages', object: f.object %>
             <%= hidden_field_tag :email, @user.email %>
 
             <%= f.label :password %>

@@ -72,6 +72,11 @@ class User < ApplicationRecord
     reset_sent_at <= 2.hours.ago
   end
 
+  def feed
+    # question mark ensures 'id' is escaped before it gets included in the query - sql injection protecton
+    Micropost.where("user_id = ?", id)
+  end
+
   private
 
   def downcase_email
