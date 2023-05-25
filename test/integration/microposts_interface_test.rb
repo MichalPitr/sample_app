@@ -76,5 +76,19 @@ class MicropostSidebarTest < MicropostsInterface
     get root_path
     assert_match '1 micropost', response.body
   end
+end
 
+class ImageUploadtest <MicropostsInterface
+
+  test 'form should have image upload field' do
+    get root_path
+    assert_select 'input[type=file]', count: 1
+  end
+
+  test 'should be able to attach an image' do
+    content = 'This is a post with an image'
+    image = fixture_file_upload('kitten.jpg', 'image/jpg')
+    post microposts_path, params: { micropost: { content: content, image: image } }
+    assert @user.microposts.first.image.attached?
+  end
 end
