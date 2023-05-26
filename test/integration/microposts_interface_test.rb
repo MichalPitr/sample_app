@@ -87,7 +87,7 @@ class ImageUploadtest <MicropostsInterface
 
   test 'should be able to attach an image' do
     content = 'This is a post with an image'
-    image = fixture_file_upload('kitten.jpg', 'image/jpg')
+    image = fixture_file_upload('kitten.jpg', 'image/jpeg')
     post microposts_path, params: { micropost: { content: content, image: image } }
     assert @user.microposts.first.image.attached?
   end

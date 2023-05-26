@@ -2,6 +2,9 @@
 
 ---
 options:
+  fullstaq: true
+  jemalloc: true
   label:
     fly_launch_runtime: rails
   postgresql: true
+  swap: 512M

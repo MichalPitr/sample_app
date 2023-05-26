@@ -2,7 +2,7 @@
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
 ARG RUBY_VERSION=3.1.2
-FROM ruby:$RUBY_VERSION-slim as base
+FROM quay.io/evl.ms/fullstaq-ruby:${RUBY_VERSION}-jemalloc-slim as base
 
 LABEL fly_launch_runtime="rails"
 
@@ -18,13 +18,28 @@ ENV RAILS_ENV="production" \
 RUN gem update --system --no-document && \
     gem install -N bundler
 
+# Install packages needed to install nodejs
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Install Node.js
+ARG NODE_VERSION=19.0.1
+ENV PATH=/usr/local/node/bin:$PATH
+RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
+    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
+    rm -rf /tmp/node-build-master
+
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential libpq-dev pkg-config
+    apt-get install --no-install-recommends -y build-essential libpq-dev libvips pkg-config
+
+# Build options
+ENV PATH="/usr/local/node/bin:$PATH"
 
 # Install application gems
 COPY --link Gemfile Gemfile.lock ./
@@ -47,12 +62,11 @@ FROM base
 
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y libsqlite3-0 postgresql-client && \
+    apt-get install --no-install-recommends -y imagemagick libsqlite3-0 libvips postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Run and own the application files as a non-root user for security
 RUN useradd rails --home /rails --shell /bin/bash
-USER rails:rails
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
