@@ -42,6 +42,7 @@ end
 
 group :production do
   gem "pg", "1.3.5"
+  gem "aws-sdk-s3", "1.114.0", require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem.
