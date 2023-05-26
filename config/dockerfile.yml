@@ -2,6 +2,7 @@
 
 ---
 options:
+  bin-cd: true
   fullstaq: true
   jemalloc: true
   label:
