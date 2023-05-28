@@ -1,0 +1,7 @@
+<%# makes update to the element selected by the id #follow_form %>
+<%= turbo_stream.update 'follow_form' do %>
+ <%= render partial: 'users/unfollow' %>
+<% end %>
+<%= turbo_stream.update 'followers' do %>
+ <%= @user.followers.count %>
+<% end %>
