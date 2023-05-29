@@ -113,6 +113,8 @@ class UserTest < ActiveSupport::TestCase
     michael.microposts.each do |own_post|
       assert michael.feed.include?(own_post)
     end
+    # every item should only occur once
+    assert_equal michael.feed.distinct, michael.feed
 
     # michael's feed should not include posts from unfollowed users
     archer.microposts.each do |unfollowed_post|
