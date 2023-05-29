@@ -61,6 +61,6 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     assert_redirected_to edit_user_path(@user)
     delete logout_path
     log_in_as(@user)
-    assert_redirected_to @user
+    assert_redirected_to root_path
   end
 end
